@@ -1,49 +1,29 @@
 'use strict';
 
 class FoodInterface {
-  
-  constructor() {
-    this.id = 0;
-    this.db = [];
+
+  constructor(model) {
+    this.model = model;
   }
 
-  // find a food from the 'db'
   read(id) {
-    if(id) {
-      return this.db.find(record => record.id === id);
-    } else {
-      return this.db;
+    if (id) {
+      return this.model.find({ _id: id });
     }
+    return this.model.find({});
   }
 
-  // add a new food to the 'db'
   create(obj) {
-    let record = {
-      id: this.id += 1,
-      data: obj,
-    };
-
-    this.db.push(record);
-    return record;
+    const document = new this.model(obj);
+    return document.save();
   }
 
-  // search for a food, and modify that food
   update(id, obj) {
-    for(let i = 0; i < this.db.length; i++) {
-      if (this.db[i].id === id) {
-        this.db[i].data = obj;
-        return this.db[i];
-      }
-    }
+    return this.model.findOneAndUpdate({ _id: id }, obj, { new: true });
   }
 
-  // search for a food and remove
   delete(id) {
-    for(let i = 0; i < this.db.length; i++) {
-      if (this.db[i].id === id) {
-        delete this.db[i];
-      }
-    }
+    this.model.findOneAndDelete({ _id: id });
   }
 
 }
