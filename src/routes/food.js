@@ -6,43 +6,39 @@ const router = express.Router();
 const validator = require('../middleware/validator.js');
 
 const FoodInterface = require('../models/food.js');
-const food = new FoodInterface();
+const FoodModel = require('../models/data-collection-class.js');
+const foodController = new FoodInterface(FoodModel.foodExport);
 
 router.get('/food', getFood);
-router.get('/food/:id', validator, getFoodById);
+router.get('/food/:id', validator, getFood);
 router.post('/food', createFood);
 router.put('/food/:id', validator, updateFood);
 router.delete('/food/:id', validator, removeFood);
 
 
-function getFood(req, res, next) {
-  let resObject = food.read();
-  res.json(resObject);
+async function getFood(req, res, next) {
+  const id = req.params.id;
+  const food = await foodController.read(id);
+  res.json(food);
 }
 
-function getFoodById(req, res, next) {
-  const id = parseInt(req.params.id);
-  let resObject = food.read(id);
-  res.json(resObject);
+async function createFood(req, res, next) {
+  const foodObj = req.body;
+  const newFood = await foodController.create(foodObj);
+  res.json(newFood);
 }
 
-function createFood(req, res, next) {
+async function updateFood(req, res, next) {
+  const id = req.params.id;
   const foodObject = req.body;
-  let resObject = food.create(foodObject);
+  let resObject = await foodController.create(foodObject, id);
   res.json(resObject);
 }
 
-function updateFood(req, res, next) {
-  const id = parseInt(req.params.id);
-  const foodObject = req.body;
-  let resObject = food.update(id, foodObject);
+async function removeFood(req, res, next) {
+  const id = req.params.id;
+  let resObject = await foodController.delete(id);
   res.json(resObject);
-}
-
-function removeFood(req, res, next) {
-  const id = parseInt(req.params.id);
-  let resObject = food.delete(id);
-  res.status(204).json(resObject);
 }
 
 module.exports = router;

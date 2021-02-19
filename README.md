@@ -6,7 +6,7 @@
 
 - [Link to Github Actions Tab](https://github.com/jquaglia/basic-api-server/actions)
 
-- [Link to PR on Github](https://github.com/jquaglia/basic-api-server/pull/1)
+- [Link to PR on Github](https://github.com/jquaglia/basic-api-server/pull/2)
 
 ## Collaborators
 
@@ -26,7 +26,7 @@
 
 1. Run the command `npm install`
 
-1. Create a `.env` file with `PORT` variable
+1. Create a `.env` file with `PORT` and `DATABASE_URI` variable
 
 ### Testing the Server
 
