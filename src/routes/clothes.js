@@ -31,7 +31,7 @@ async function createClothes(req, res, next) {
 async function updateClothes(req, res, next) {
   const id = req.params.id;
   const clothesObject = req.body;
-  let resObject = await clothesController.create(clothesObject, id);
+  let resObject = await clothesController.update(id, clothesObject);
   res.json(resObject);
 }
 
