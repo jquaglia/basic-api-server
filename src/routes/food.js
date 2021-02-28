@@ -31,7 +31,7 @@ async function createFood(req, res, next) {
 async function updateFood(req, res, next) {
   const id = req.params.id;
   const foodObject = req.body;
-  let resObject = await foodController.create(foodObject, id);
+  let resObject = await foodController.update(id, foodObject);
   res.json(resObject);
 }
 
